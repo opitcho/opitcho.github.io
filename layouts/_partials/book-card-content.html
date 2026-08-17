@@ -1,26 +1,26 @@
 {{ $book := .book }}
 {{ $cover := .cover }}
 {{ $hasNotes := .hasNotes }}
-<div class="w-20 flex-none sm:w-28">
+<div class="flex-none pe-4 sm:pe-6">
   {{ if $cover }}
     <img
-      class="aspect-[2/3] w-full rounded-md object-cover shadow-md"
-      src="{{ ($cover.Fill "200x300 smart").Permalink }}"
-      srcset="{{ ($cover.Fill "200x300 smart").Permalink }} 1x, {{ ($cover.Fill "400x600 smart").Permalink }} 2x"
-      width="200"
-      height="300"
+      class="w-24 rounded-md shadow sm:w-40"
+      src="{{ ($cover.Fill "160x240 smart").Permalink }}"
+      srcset="{{ ($cover.Fill "160x240 smart").Permalink }} 1x, {{ ($cover.Fill "320x480 smart").Permalink }} 2x"
+      width="160"
+      height="240"
       alt="Cover of {{ $book.Title }}"
       loading="lazy"
     />
   {{ else }}
     <div
-      class="flex aspect-[2/3] w-full items-center justify-center rounded-md bg-neutral-100 text-xs text-neutral-400 shadow-md dark:bg-neutral-800 dark:text-neutral-600"
+      class="flex h-36 w-24 items-center justify-center rounded-md bg-neutral-100 text-xs text-neutral-400 shadow sm:h-60 sm:w-40 dark:bg-neutral-800 dark:text-neutral-600"
     >
       No cover
     </div>
   {{ end }}
 </div>
-<div class="flex min-w-0 flex-col justify-center">
+<div class="min-w-0">
   <h2
     class="text-xl font-semibold text-neutral-800 dark:text-neutral {{ if $hasNotes }}
       group-hover:underline group-hover:decoration-primary-500 group-hover:underline-offset-2

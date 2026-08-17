@@ -7,7 +7,7 @@
   {{ end }}
   {{ $books := where .Site.RegularPages "Section" "books" }}
   {{ if $books }}
-    <section class="mt-10 flex max-w-prose flex-col gap-6">
+    <section class="mt-10 max-w-prose">
       {{ range $books.ByDate.Reverse }}
         {{ $book := . }}
         {{ $hasNotes := ne (len (trim $book.Content "\n\t ")) 0 }}
@@ -15,11 +15,11 @@
         {{ $cover := $images.GetMatch ($book.Params.cover | default "*cover*") }}
         {{ $ctx := dict "book" $book "cover" $cover "hasNotes" $hasNotes }}
         {{ if $hasNotes }}
-          <a href="{{ $book.Permalink }}" class="group flex flex-row gap-5">
+          <a href="{{ $book.Permalink }}" class="group mb-8 flex flex-row last:mb-0">
             {{ partial "book-card-content.html" $ctx }}
           </a>
         {{ else }}
-          <div class="group flex flex-row gap-5">
+          <div class="group mb-8 flex flex-row last:mb-0">
             {{ partial "book-card-content.html" $ctx }}
           </div>
         {{ end }}

@@ -2,15 +2,15 @@
   {{ $images := .Resources.ByType "image" }}
   {{ $cover := $images.GetMatch (.Params.cover | default "*cover*") }}
   <article>
-    <header class="flex max-w-prose flex-col gap-6 sm:flex-row">
+    <header class="flex max-w-prose flex-col sm:flex-row">
       {{ with $cover }}
-        <div class="w-32 flex-none sm:w-40">
+        <div class="flex-none pb-4 sm:pe-6">
           <img
-            class="aspect-[2/3] w-full rounded-md object-cover shadow-md"
-            src="{{ (.Fill "300x450 smart").Permalink }}"
-            srcset="{{ (.Fill "300x450 smart").Permalink }} 1x, {{ (.Fill "600x900 smart").Permalink }} 2x"
-            width="300"
-            height="450"
+            class="w-36 rounded-md shadow sm:w-40"
+            src="{{ (.Fill "240x360 smart").Permalink }}"
+            srcset="{{ (.Fill "240x360 smart").Permalink }} 1x, {{ (.Fill "480x720 smart").Permalink }} 2x"
+            width="240"
+            height="360"
             alt="Cover of {{ $.Title }}"
           />
         </div>

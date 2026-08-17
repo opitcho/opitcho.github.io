@@ -1,0 +1,9 @@
+/* Congo ships a precompiled Tailwind bundle containing only the utility
+   classes its own templates use, so custom templates can't reach for
+   arbitrary Tailwind utilities (e.g. gap-*) that aren't already present.
+   This file is picked up automatically by the theme and appended to the
+   compiled CSS bundle - add plain CSS here for anything extra needed. */
+
+.gap-6 {
+  gap: 1.5rem;
+}
