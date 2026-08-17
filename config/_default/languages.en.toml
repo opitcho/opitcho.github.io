@@ -14,6 +14,8 @@ title = "Oscar Pitcho"
 
 [params.author]
   name = "Oscar Pitcho"
+  image = "img/author.jpg"
+  headline = "Welcome to my corner of the internet"
   links = [
     { email = "mailto:oscar.pitcho@live.com" },
     { github = "https://github.com/opitcho" },
