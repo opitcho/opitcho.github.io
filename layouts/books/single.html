@@ -1,0 +1,35 @@
+{{ define "main" }}
+  {{ $images := .Resources.ByType "image" }}
+  {{ $cover := $images.GetMatch (.Params.cover | default "*cover*") }}
+  <article>
+    <header class="flex max-w-prose flex-col gap-6 sm:flex-row">
+      {{ with $cover }}
+        <div class="w-32 flex-none sm:w-40">
+          <img
+            class="aspect-[2/3] w-full rounded-md object-cover shadow-md"
+            src="{{ (.Fill "300x450 smart").Permalink }}"
+            srcset="{{ (.Fill "300x450 smart").Permalink }} 1x, {{ (.Fill "600x900 smart").Permalink }} 2x"
+            width="300"
+            height="450"
+            alt="Cover of {{ $.Title }}"
+          />
+        </div>
+      {{ end }}
+      <div>
+        <h1 class="mb-2 mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">
+          {{ .Title | emojify }}
+        </h1>
+        {{ with .Params.bookAuthor }}
+          <p class="text-lg text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+        {{ end }}
+        <p class="text-sm text-neutral-400 dark:text-neutral-500">
+          {{ partial "functions/date.html" .Date }}
+        </p>
+      </div>
+    </header>
+    <section class="prose mt-10 max-w-prose dark:prose-invert">{{ .Content | emojify }}</section>
+    <footer class="max-w-prose pt-8 print:hidden">
+      {{ partial "article-pagination.html" . }}
+    </footer>
+  </article>
+{{ end }}

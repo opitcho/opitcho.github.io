@@ -1,0 +1,68 @@
+{{ define "main" }}
+  <header>
+    <h1 class="mt-0 text-4xl font-extrabold text-neutral-900 dark:text-neutral">{{ .Title }}</h1>
+  </header>
+  {{ with .Content }}
+    <section class="prose mt-6 dark:prose-invert">{{ . | emojify }}</section>
+  {{ end }}
+  {{ $books := where .Site.RegularPages "Section" "books" }}
+  {{ if $books }}
+    <section class="mt-10 flex flex-col gap-8">
+      {{ range $books.ByDate.Reverse }}
+        {{ $book := . }}
+        {{ $hasNotes := ne (len (trim $book.Content "\n\t ")) 0 }}
+        {{ $images := $book.Resources.ByType "image" }}
+        {{ $cover := $images.GetMatch ($book.Params.cover | default "*cover*") }}
+        {{ $tag := cond $hasNotes "a" "div" }}
+        <{{ $tag }}
+          {{ if $hasNotes }}href="{{ $book.Permalink }}"{{ end }}
+          class="group flex flex-row gap-5 {{ if $hasNotes }}
+            cursor-pointer
+          {{ end }}"
+        >
+          <div class="w-20 flex-none sm:w-28">
+            {{ if $cover }}
+              <img
+                class="aspect-[2/3] w-full rounded-md object-cover shadow-md"
+                src="{{ ($cover.Fill "200x300 smart").Permalink }}"
+                srcset="{{ ($cover.Fill "200x300 smart").Permalink }} 1x, {{ ($cover.Fill "400x600 smart").Permalink }} 2x"
+                width="200"
+                height="300"
+                alt="Cover of {{ $book.Title }}"
+                loading="lazy"
+              />
+            {{ else }}
+              <div
+                class="flex aspect-[2/3] w-full items-center justify-center rounded-md bg-neutral-100 text-xs text-neutral-400 shadow-md dark:bg-neutral-800 dark:text-neutral-600"
+              >
+                No cover
+              </div>
+            {{ end }}
+          </div>
+          <div class="flex min-w-0 flex-col justify-center">
+            <h2
+              class="text-xl font-semibold text-neutral-800 dark:text-neutral {{ if $hasNotes }}
+                group-hover:underline group-hover:decoration-primary-500 group-hover:underline-offset-2
+              {{ end }}"
+            >
+              {{ $book.Title | emojify }}
+            </h2>
+            {{ with $book.Params.bookAuthor }}
+              <p class="text-neutral-500 dark:text-neutral-400">{{ . }}</p>
+            {{ end }}
+            <p class="text-sm text-neutral-400 dark:text-neutral-500">
+              {{ partial "functions/date.html" $book.Date }}
+              {{- if not $hasNotes }}
+                &middot; no notes yet
+              {{ end }}
+            </p>
+          </div>
+        </{{ $tag }}>
+      {{ end }}
+    </section>
+  {{ else }}
+    <section class="prose mt-10 dark:prose-invert">
+      <p class="border-t py-8"><em>No books yet.</em></p>
+    </section>
+  {{ end }}
+{{ end }}
