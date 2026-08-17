@@ -7,3 +7,9 @@
 .gap-6 {
   gap: 1.5rem;
 }
+
+/* Justify body copy so line edges are flush instead of ragged-right */
+.prose p {
+  text-align: justify;
+  text-justify: inter-word;
+}
